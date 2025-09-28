@@ -20,7 +20,7 @@ export function DashboardLayout({
 }: DashboardLayoutProps) {
   return (
     <NavigationProvider>
-      <div className="relative flex min-h-screen bg-background">
+      <div className="relative flex min-h-screen bg-background overflow-hidden">
         <Sidebar 
           userRole={userRole} 
           userName={userName} 
@@ -33,7 +33,7 @@ export function DashboardLayout({
             userAvatar={userAvatar} 
           />
           <main className="flex-1 overflow-y-auto">
-            <div className="container mx-auto p-4 md:p-6 lg:p-8">
+            <div className=" ">
               {children}
             </div>
           </main>

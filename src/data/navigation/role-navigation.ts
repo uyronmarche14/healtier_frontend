@@ -29,6 +29,7 @@ import {
   Clock,
   CheckCircle,
   AlertCircle,
+  Subscript
 } from 'lucide-react'
 
 export interface NavItem {
@@ -51,51 +52,57 @@ export const roleNavigation: Record<string, RoleNavigation> = {
     primary: [
       {
         title: 'Dashboard',
-        href: '/patient-portal',
+        href: '/patients-dashboard',
         icon: LayoutDashboard,
         description: 'Overview of your health and activities',
       },
       {
         title: 'My Health',
-        href: '/patient-portal/health',
+        href: '/patients-dashboard/health',
         icon: Heart,
         description: 'Health records and vitals',
       },
       {
         title: 'Store',
-        href: '/patient/store',
+        href: '/patients-dashboard/medicine',
         icon: ShoppingCart,
         badge: 'New',
         description: 'Purchase medicines and health products',
       },
       {
         title: 'Appointments',
-        href: '/patient/appointments',
+        href: '/patients-dashboard/appointments',
         icon: Calendar,
         description: 'Schedule and manage appointments',
       },
       {
         title: 'Prescriptions',
-        href: '/patient/prescriptions',
+        href: '/patients-dashboard/prescriptions',
         icon: FileText,
         description: 'View and manage prescriptions',
       },
       {
+        title: 'Subscription',
+        href: '/patients-dashboard/subscription',
+        icon: Subscript,
+        description: 'View and manage subscription plans',
+      },
+      {
         title: 'Billing',
-        href: '/patient/billing',
+        href: '/patients-dashboard/billing',
         icon: CreditCard,
         description: 'View invoices and payment history',
       },
       {
         title: 'Messages',
-        href: '/patient/messages',
+        href: '/patients-dashboard/chat',
         icon: MessageSquare,
         badge: '5',
         description: 'Communicate with doctors and staff',
       },
       {
         title: 'Healtier Talks',
-        href: '/patient/health-talks',
+        href: '/patients-dashboard/aitalks',
         icon: MessageSquare,
         badge: '5',
         description: 'Try asking AI',
@@ -144,7 +151,7 @@ export const roleNavigation: Record<string, RoleNavigation> = {
       },
       {
         title: 'My Patients',
-        href: '/doctor/patients',
+        href: '/doctor-dashboard/patients',
         icon: UserCheck,
         description: 'Patient records and management',
       },
@@ -175,7 +182,7 @@ export const roleNavigation: Record<string, RoleNavigation> = {
       },
       {
         title: 'Messages',
-        href: '/doctor/messages',
+        href: '/doctor-dashboard/chat',
         icon: MessageSquare,
         description: 'Communicate with patients and staff',
       },

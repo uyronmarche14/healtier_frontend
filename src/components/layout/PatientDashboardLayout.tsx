@@ -35,7 +35,7 @@ export function PatientDashboardLayout({
             userAvatar={userAvatar} 
           />
           <main className="flex-1 overflow-y-auto">
-            <div className="container mx-auto p-4 md:p-6 lg:p-8">
+            <div className="p-4 md:p-6">
               {children}
             </div>
           </main>
