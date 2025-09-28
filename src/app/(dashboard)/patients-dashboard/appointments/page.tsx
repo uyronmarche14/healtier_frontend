@@ -24,7 +24,6 @@ export default function PatientDashboardPage() {
 
       <OverviewCards
         appointment={mockAppointment}
-        subscription={mockSubscription}
         invoice={mockInvoice}
       />
 

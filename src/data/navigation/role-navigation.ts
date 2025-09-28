@@ -145,7 +145,7 @@ export const roleNavigation: Record<string, RoleNavigation> = {
     primary: [
       {
         title: 'Dashboard',
-        href: '/doctor/dashboard',
+        href: '/doctor-dashboard/dashboard',
         icon: LayoutDashboard,
         description: 'Overview of your practice',
       },
@@ -157,16 +157,16 @@ export const roleNavigation: Record<string, RoleNavigation> = {
       },
       {
         title: 'Appointments',
-        href: '/doctor/appointments',
+        href: '/doctor-dashboard/appointments',
         icon: Calendar,
         badge: '3',
         description: 'Schedule and manage appointments',
       },
       {
         title: 'Prescriptions',
-        href: '/doctor/prescriptions',
+        href: '/doctor-dashboard/prescription',
         icon: FileText,
-        description: 'Create and manage prescriptions',
+        description: 'Create and manage prescription',
       },
       {
         title: 'Medicines',
