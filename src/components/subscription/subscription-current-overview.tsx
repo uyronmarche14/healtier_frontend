@@ -42,9 +42,9 @@ export function SubscriptionCurrentOverview({
   const daysUntilBilling = Math.ceil((subscription.nextBillingDate.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
 
   return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <div className="w-full grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {/* Current Plan Status */}
-      <Card>
+      <Card className="w-full">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Current Plan</CardTitle>
           <div className={`h-2 w-2 rounded-full ${getStatusColor(subscription.status)}`} />
@@ -63,7 +63,7 @@ export function SubscriptionCurrentOverview({
       </Card>
 
       {/* Usage Overview */}
-      <Card>
+      <Card className="w-full">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Usage This Month</CardTitle>
           <UserCheck className="h-4 w-4 text-muted-foreground" />
@@ -75,7 +75,7 @@ export function SubscriptionCurrentOverview({
                 <span>Consultations</span>
                 <span>{subscription.usage.consultationsUsed}/{subscription.plan.consultations.included}</span>
               </div>
-              <Progress value={consultationPercentage} className="h-2" />
+              <Progress value={consultationPercentage} className="h-2 w-full" />
             </div>
             <div className="flex justify-between text-sm">
               <span>Medicine Savings</span>
@@ -90,7 +90,7 @@ export function SubscriptionCurrentOverview({
       </Card>
 
       {/* Billing Information */}
-      <Card>
+      <Card className="w-full">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Billing</CardTitle>
           <CreditCard className="h-4 w-4 text-muted-foreground" />
@@ -113,7 +113,7 @@ export function SubscriptionCurrentOverview({
       </Card>
 
       {/* Action Buttons */}
-      <Card className="md:col-span-2 lg:col-span-3">
+      <Card className="w-full md:col-span-2 lg:col-span-3">
         <CardHeader>
           <CardTitle>Plan Management</CardTitle>
           <CardDescription>Manage your subscription and billing preferences</CardDescription>

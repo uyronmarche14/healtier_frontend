@@ -122,11 +122,11 @@ export function LabResultsCard({
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h4 className="text-sm font-medium">Health Reports</h4>
-            <Badge variant="secondary">{healthReports.length} reports</Badge>
+            <Badge variant="secondary">{healthReports?.length || 0} reports</Badge>
           </div>
           
           <div className="space-y-3">
-            {healthReports.slice(0, 2).map((report) => (
+            {healthReports?.slice(0, 2).map((report) => (
               <div key={report.id} className="p-4 border rounded-lg hover:bg-muted/50 transition-colors">
                 <div className="flex items-start justify-between mb-3">
                   <div>

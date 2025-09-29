@@ -39,7 +39,7 @@ export function MedicationAdherenceCard({
   }
 
   const calculateAdherenceRate = () => {
-    if (adherence.length === 0) return 0
+    if (!adherence || adherence.length === 0) return 0
     const takenCount = adherence.filter(a => a.status === 'taken').length
     return Math.round((takenCount / adherence.length) * 100)
   }
@@ -79,8 +79,8 @@ export function MedicationAdherenceCard({
             </div>
             <Progress value={adherenceRate} className="h-2" />
             <div className="flex justify-between text-xs text-muted-foreground">
-              <span>{adherence.filter(a => a.status === 'taken').length} taken</span>
-              <span>{adherence.filter(a => a.status === 'missed').length} missed</span>
+              <span>{adherence?.filter(a => a.status === 'taken')?.length || 0} taken</span>
+              <span>{adherence?.filter(a => a.status === 'missed')?.length || 0} missed</span>
             </div>
           </div>
 

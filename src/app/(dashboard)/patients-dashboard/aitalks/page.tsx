@@ -23,16 +23,7 @@ import { AIInstructionManager } from '@/components/ai/talks/ai-instruction-manag
 import { NewFeatureBadge } from '@/components/ai/talks/new-feature-badge'
 import type { AITalkMessage, AITalkTab, AIInstruction } from '@/types/ai-talks'
 export default function PatientAITalksPage() {
-  const [messages, setMessages] = useState<AITalkMessage[]>([
-    {
-      id: '1',
-      role: 'assistant',
-      content: 'Hello! I\'m your AI health assistant. I can help you understand your medical records, provide health summaries, and answer questions about your health data. How can I help you today?',
-      timestamp: new Date(),
-      type: 'text',
-      tab: 'general'
-    }
-  ])
+  const [messages, setMessages] = useState<AITalkMessage[]>([])
   const [inputValue, setInputValue] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [status, setStatus] = useState<'submitted' | 'streaming' | 'error' | undefined>(undefined)
@@ -40,9 +31,25 @@ export default function PatientAITalksPage() {
   const [aiInstructions, setAiInstructions] = useState<AIInstruction[]>([])
   const [showInstructionManager, setShowInstructionManager] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const [isClient, setIsClient] = useState(false)
 
   // Load AI instructions on component mount
   useEffect(() => {
+    // Set client-side flag
+    setIsClient(true)
+    
+    // Initialize with welcome message on client side only
+    setMessages([
+      {
+        id: '1',
+        role: 'assistant',
+        content: 'Hello! I\'m your AI health assistant. I can help you understand your medical records, provide health summaries, and answer questions about your health data. How can I help you today?',
+        timestamp: new Date(),
+        type: 'text',
+        tab: 'general'
+      }
+    ])
+    
     // TODO: Load instructions from Supabase
     const defaultInstructions: AIInstruction[] = [
       {
@@ -76,24 +83,57 @@ export default function PatientAITalksPage() {
     setIsLoading(true)
     setStatus('streaming')
 
-    // Get active instructions for current tab
-    const activeTabInstructions = aiInstructions.filter(
-      instruction => instruction.isActive && instruction.category === activeTab
-    )
+    try {
+      // Get all messages for the current tab to maintain conversation context
+      const tabMessages = messages.filter(message => message.tab === activeTab);
+      
+      // Format messages for the API
+      const formattedMessages = tabMessages.map(msg => ({
+        role: msg.role,
+        content: msg.content
+      }));
+      
+      // Add the new user message
+      formattedMessages.push({
+        role: 'user',
+        content: userMessage.content
+      });
 
-    // Simulate AI response with tab-specific content
-    setTimeout(() => {
-      const tabResponses = {
-        general: 'I understand your concern. Based on your medical records, I can provide you with relevant information and insights. Please note that I\'m an AI assistant and my responses should not replace professional medical advice.',
-        fitness: 'I\'d be happy to help you with fitness and exercise recommendations! Based on your health data, I can suggest personalized workout routines and track your progress towards your fitness goals.',
-        mental: 'I\'m here to support your mental wellness journey. I can provide coping strategies, mindfulness techniques, and help you track your mood patterns while ensuring you get appropriate professional support when needed.',
-        nutrition: 'I can help you with nutrition advice and meal planning based on your health conditions and dietary requirements. Let me analyze your current nutritional status and provide personalized recommendations.'
+      // Determine if we should use RAG for health/fitness specific queries
+      const useRag = activeTab === 'fitness' || 
+                    activeTab === 'nutrition' || 
+                    activeTab === 'mental' ||
+                    (activeTab === 'general' && 
+                     (userMessage.content.toLowerCase().includes('health') || 
+                      userMessage.content.toLowerCase().includes('fitness') ||
+                      userMessage.content.toLowerCase().includes('diet') ||
+                      userMessage.content.toLowerCase().includes('exercise')));
+      
+      // Call the appropriate Gemini API 
+      
+      const apiEndpoint = useRag ? '../../../api/ai/gemini/rag/route' : '/api/ai/gemini';
+      const response = await fetch(apiEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          messages: formattedMessages,
+          category: activeTab,
+          query: userMessage.content // Include the query for RAG context matching
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to get response from AI');
       }
 
+      const data = await response.json();
+      
       const aiMessage: AITalkMessage = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: tabResponses[activeTab as keyof typeof tabResponses] || tabResponses.general,
+        content: data.response,
         timestamp: new Date(),
         type: 'text',
         tab: activeTab
@@ -101,7 +141,23 @@ export default function PatientAITalksPage() {
       setMessages(prev => [...prev, aiMessage])
       setIsLoading(false)
       setStatus('submitted')
-    }, 1000)
+    } catch (error) {
+      console.error('Error getting AI response:', error);
+      
+      // Add error message
+      const errorMessage: AITalkMessage = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: 'Sorry, I encountered an error processing your request. Please try again.',
+        timestamp: new Date(),
+        type: 'text',
+        tab: activeTab
+      }
+      
+      setMessages(prev => [...prev, errorMessage])
+      setIsLoading(false)
+      setStatus('error')
+    }
   }
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
@@ -190,7 +246,7 @@ export default function PatientAITalksPage() {
                             <div className="space-y-2">
                               <div className="font-medium text-xs text-muted-foreground flex items-center gap-2 flex-wrap">
                                 <span>{message.role === 'user' ? 'You' : 'AI Assistant'}</span>
-                                <span>{message.timestamp.toLocaleTimeString()}</span>
+                                {isClient && <span>{message.timestamp.toLocaleTimeString()}</span>}
                                 {message.tab !== 'general' && (
                                   <Badge variant="outline" className="text-xs capitalize">
                                     {message.tab}

@@ -84,7 +84,7 @@ export function DeviceIntegrationCard({
       </CardHeader>
       
       <CardContent className="space-y-4">
-        {devices.length === 0 ? (
+        {!devices || devices.length === 0 ? (
           <div className="text-center py-8">
             <Smartphone className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
             <p className="text-sm text-muted-foreground">No connected devices</p>
@@ -200,7 +200,7 @@ export function DeviceIntegrationCard({
             <div>
               <h4 className="text-sm font-medium">Data Sync Status</h4>
               <p className="text-xs text-muted-foreground">
-                {devices.filter(d => d.isConnected).length} devices connected
+                {devices?.filter(d => d.isConnected)?.length || 0} devices connected
               </p>
             </div>
             <Button size="sm" variant="outline">

@@ -61,7 +61,7 @@ export function Navbar({
               <span className="text-sm font-bold">M</span>
             </div>
             <span className="hidden font-semibold md:inline-block">
-              MedGhost
+              Healtier
             </span>
           </Link>
 

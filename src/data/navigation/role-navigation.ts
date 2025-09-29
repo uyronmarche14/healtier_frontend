@@ -29,7 +29,9 @@ import {
   Clock,
   CheckCircle,
   AlertCircle,
-  Subscript
+  Subscript,
+  ClipboardCheck,
+  Menu
 } from 'lucide-react'
 
 export interface NavItem {
@@ -88,10 +90,10 @@ export const roleNavigation: Record<string, RoleNavigation> = {
         description: 'View and manage subscription plans',
       },
       {
-        title: 'Billing',
-        href: '/patients-dashboard/billing',
-        icon: CreditCard,
-        description: 'View invoices and payment history',
+        title: 'Records',
+        href: '/patients-dashboard/records',
+        icon: Menu,
+        description: 'View health records and documents',
       },
       {
         title: 'Messages',
@@ -104,6 +106,13 @@ export const roleNavigation: Record<string, RoleNavigation> = {
         title: 'Healtier Talks',
         href: '/patients-dashboard/aitalks',
         icon: MessageSquare,
+        badge: '5',
+        description: 'Try asking AI',
+      },
+      {
+        title: 'Healtier Work',
+        href: '/patients-dashboard/health-suggestion-fitnessz',
+        icon: Clock,
         badge: '5',
         description: 'Try asking AI',
       },
@@ -169,10 +178,10 @@ export const roleNavigation: Record<string, RoleNavigation> = {
         description: 'Create and manage prescription',
       },
       {
-        title: 'Medicines',
-        href: '/doctor/medicines',
-        icon: Pill,
-        description: 'Browse medicine catalog',
+        title: 'Records',
+        href: '/doctor-dashboard/records',
+        icon: ClipboardCheck,
+        description: 'Browse patient records',
       },
       {
         title: 'Analytics',

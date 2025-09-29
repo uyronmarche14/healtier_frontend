@@ -1,5 +1,9 @@
-import { HealthDashboard } from '@/components/health/health-dashboard'
+import { ComprehensiveHealthDashboard } from '@/components/health/comprehensive-health-dashboard'
 
 export default function HealthPage() {
-  return <HealthDashboard />
+  return (
+    <div className="container mx-auto py-4">
+      <ComprehensiveHealthDashboard />
+    </div>
+  )
 }

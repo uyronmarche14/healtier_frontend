@@ -19,7 +19,6 @@ import {
   AppointmentProviderInfo,
   AppointmentPendingBadge,
   AppointmentRowActions,
-  AppointmentStatsCards
 } from '@/components/appointments'
 
 // Action handlers
@@ -287,7 +286,6 @@ export default function DoctorAppointmentsPage() {
       </div>
 
       {/* Stats Cards */}
-      <AppointmentStatsCards stats={mockAppointmentStats} />
 
       <DataTable
         columns={columns}

@@ -57,7 +57,7 @@ export function SubscriptionDashboard({
 
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Current Subscription Overview */}
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-4">
           {currentSubscription && (
             <SubscriptionCurrentOverview
               subscription={currentSubscription}

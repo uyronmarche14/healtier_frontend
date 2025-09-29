@@ -64,7 +64,7 @@ export function HealthGoalsCard({ goals, onGoalClick, onAddGoal, className }: He
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {goals.length === 0 ? (
+          {!goals || goals.length === 0 ? (
             <div className="text-center py-8">
               <Target className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
               <p className="text-sm text-muted-foreground">No active health goals</p>
